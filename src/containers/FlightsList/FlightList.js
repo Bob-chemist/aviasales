@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import classes from './FlightList.module.sass';
 import Flight from '../../components/Flight';
 import Axios from 'axios';
+import Loader from '../../components/Loader';
+import ErrorIndicator from '../../components/ErrorIndicator/ErrorIndicator';
 
 export default class FlightList extends Component {
   state = {
-    activeButton: 'cheap',
+    activeButton: 'price',
     tickets: [],
+    loading: true,
+    error: null,
   }
 
   componentDidMount() {
@@ -16,47 +20,79 @@ export default class FlightList extends Component {
       .then(({ data }) => {
         const { tickets } = data;
 
-        if (tickets && tickets.length) {
-          if (tickets.length > 30) {
-            tickets.length = 30;
-          }
+        // if (tickets && tickets.length) {
+        //   if (tickets.length > 30) {
+        //     tickets.length = 30;
+        //   }
 
-          this.setState({ tickets });
-        }
+        this.setState({
+          tickets: this.sortByPrice(tickets),
+          loading: false,
+        });
+        // }
       })
-      .catch((err) => console.log(err.message));
+      .catch((error) => {
+        this.setState({
+          error,
+          loading: false,
+        });
+        console.log(error.message);
+      });
 
+  }
+
+  sortByPrice = (arr) => {
+    return arr.sort((a, b) => a.price - b.price);
+  }
+
+  sortByTime = (arr) => {
+    return arr.sort((a, b) => {
+      a.segments.sort((x, y) => x.duration - y.duration);
+      b.segments.sort((x, y) => x.duration - y.duration);
+      return a.segments[0].duration - b.segments[0].duration;
+    });
   }
 
   buttonHandler = (event) => {
     event.preventDefault();
-    this.setState({ activeButton: event.target.value });
+
+    const { value } = event.target;
+    const { tickets, activeButton } = this.state;
+
+    if (activeButton === value) return;
+
+    this.setState({
+      activeButton: value,
+      tickets: value === 'price' ? this.sortByPrice(tickets) : this.sortByTime(tickets),
+    });
   }
 
   render() {
-    const { activeButton, tickets } = this.state;
+    const { activeButton, tickets, error, loading } = this.state;
     const { List, ChoiceButtons, ChoiceButton, active } = classes;
     let { left, right } = classes;
 
-    if (activeButton === 'cheap') {
+    if (activeButton === 'price') {
       left = `${left} ${active}`;
     } else {
       right = `${right} ${active}`;
     }
 
+    if (error) return <ErrorIndicator info={error.message} />;
+
     return (
       <div className={List}>
         <div className={ChoiceButtons}>
-          <button className={`${ChoiceButton} ${left}`} value='cheap'
+          <button className={`${ChoiceButton} ${left}`} value='price'
             onClick={this.buttonHandler}>
             самый дешевый
           </button>
-          <button className={`${ChoiceButton} ${right}`} value='fast'
+          <button className={`${ChoiceButton} ${right}`} value='duration'
             onClick={this.buttonHandler}>
             самый быстрый
           </button>
         </div>
-        {tickets.map((ticket, index) => {
+        {loading ? <Loader /> : tickets.map((ticket, index) => {
           return <Flight ticket={ticket} key={index} />;
         })}
 
