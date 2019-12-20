@@ -3,7 +3,7 @@ import classes from './FlightList.module.sass';
 import Flight from '../../components/Flight';
 import Axios from 'axios';
 import Loader from '../../components/Loader';
-import ErrorIndicator from '../../components/ErrorIndicator/ErrorIndicator';
+import ErrorIndicator from '../../components/ErrorIndicator';
 
 export default class FlightList extends Component {
   state = {
@@ -20,16 +20,16 @@ export default class FlightList extends Component {
       .then(({ data }) => {
         const { tickets } = data;
 
-        // if (tickets && tickets.length) {
-        //   if (tickets.length > 30) {
-        //     tickets.length = 30;
-        //   }
+        if (tickets && tickets.length) {
+          if (tickets.length > 5) {
+            tickets.length = 5;
+          }
 
-        this.setState({
-          tickets: this.sortByPrice(tickets),
-          loading: false,
-        });
-        // }
+          this.setState({
+            tickets: this.sortByPrice(tickets),
+            loading: false,
+          });
+        }
       })
       .catch((error) => {
         this.setState({
