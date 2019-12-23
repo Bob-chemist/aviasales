@@ -11,6 +11,10 @@ const FlightList = () => {
   const [ loading, setLoading ] = useState(true);
   const [ error, setError ] = useState(null);
 
+  const prepareData = (arr) => {
+    return sortByPrice(sortByTime(arr.map((item, id) => ({ ...item, id }))));
+  };
+
   useEffect(() => {
     API.get('search')
       .then(({ data }) => data.searchId)
@@ -22,7 +26,7 @@ const FlightList = () => {
             tickets.length = 5;
           }
 
-          setTickets(sortByPrice(tickets));
+          setTickets(prepareData(tickets));
           setLoading(false);
         }
       })
@@ -31,7 +35,7 @@ const FlightList = () => {
         setLoading(false);
         console.log(error.message);
       });
-
+    // eslint-disable-next-line
   }, []);
 
   const sortByPrice = (arr) => {
@@ -79,8 +83,8 @@ const FlightList = () => {
           самый быстрый
         </button>
       </div>
-      {loading ? <Loader /> : tickets.map((ticket, index) => {
-        return <Flight ticket={ticket} key={index} />;
+      {loading ? <Loader /> : tickets.map((ticket) => {
+        return <Flight ticket={ticket} key={ticket.id} />;
       })}
 
     </div>
