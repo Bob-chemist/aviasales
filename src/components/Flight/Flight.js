@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Flight.module.sass';
 import FlightRow from './FlightRow/FlightRow';
 
-export default function Flight({ ticket: { price, carrier, segments } }) {
+const Flight = ({ ticket: { price, carrier, segments } }) => {
   const { Card, priceClass, companyLogo } = classes;
 
   return (
@@ -18,4 +18,6 @@ export default function Flight({ ticket: { price, carrier, segments } }) {
       })}
     </div>
   );
-}
+};
+
+export default Flight;

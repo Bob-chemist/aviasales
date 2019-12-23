@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import classes from './FlightList.module.sass';
 import Flight from '../../components/Flight';
-import Axios from 'axios';
+import API from '../../API';
 import Loader from '../../components/Loader';
 import ErrorIndicator from '../../components/ErrorIndicator';
 
-export default class FlightList extends Component {
+class FlightList extends Component {
   state = {
     activeButton: 'price',
     tickets: [],
@@ -14,9 +14,9 @@ export default class FlightList extends Component {
   }
 
   componentDidMount() {
-    Axios.get('https://front-test.beta.aviasales.ru/search')
+    API.get('search')
       .then(({ data }) => data.searchId)
-      .then((id) => Axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${id}`))
+      .then((id) => API.get(`tickets?searchId=${id}`))
       .then(({ data }) => {
         const { tickets } = data;
 
@@ -100,3 +100,5 @@ export default class FlightList extends Component {
     );
   }
 }
+
+export default FlightList;

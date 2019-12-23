@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './FlightRow.module.sass';
 
-export default function FlightRow({ item: { origin, destination, date, duration, stops } }) {
+const FlightRow = ({ item: { origin, destination, date, duration, stops } }) => {
   const { title, content } = classes;
 
   const landings = (num) => {
@@ -55,4 +55,6 @@ export default function FlightRow({ item: { origin, destination, date, duration,
       </div>
     </>
   );
-}
+};
+
+export default FlightRow;
