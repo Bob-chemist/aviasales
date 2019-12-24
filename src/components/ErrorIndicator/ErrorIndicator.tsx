@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from './ErrorIndicator.module.sass';
 
-const ErrorIndicator = (props) => {
+const ErrorIndicator = ({ info }: {info: string}) => {
   return (
     <div className={classes.error}>
-      {`Something gone wrong! ${props.info}`}
+      {`Something gone wrong! ${info}`}
     </div>
   );
 };

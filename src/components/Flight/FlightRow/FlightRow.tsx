@@ -1,10 +1,20 @@
 import React from 'react';
 import classes from './FlightRow.module.sass';
 
-const FlightRow = ({ item: { origin, destination, date, duration, stops } }) => {
+interface Item {
+  item: {
+    origin: string,
+    destination: string,
+    date: string,
+    duration: number,
+    stops: string[],
+  }
+}
+
+const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Item) => {
   const { title, content } = classes;
 
-  const landings = (num) => {
+  const landings = (num: number) => {
     switch (num) {
       case 1: return '1 пересадка';
       case 2:
@@ -13,11 +23,11 @@ const FlightRow = ({ item: { origin, destination, date, duration, stops } }) => 
     }
   };
 
-  const flightTime = (min) => {
+  const flightTime = (min: number) => {
     return `${Math.floor(min / 60)}ч ${min % 60}м`;
   };
 
-  const departureArrival = (date, duration) => {
+  const departureArrival = (date: string, duration: number) => {
     const departure = new Date(date).toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' });
     const arrival = new Date(new Date(date).getTime() + duration * 60 * 1000)
       .toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' });

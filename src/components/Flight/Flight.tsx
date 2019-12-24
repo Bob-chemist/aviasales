@@ -2,7 +2,15 @@ import React from 'react';
 import classes from './Flight.module.sass';
 import FlightRow from './FlightRow/FlightRow';
 
-const Flight = ({ ticket: { price, carrier, segments } }) => {
+interface IFlight {
+  ticket: {
+    price: number,
+    carrier: string,
+    segments: []
+  }
+}
+
+const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
   const { Card, priceClass, companyLogo } = classes;
 
   return (

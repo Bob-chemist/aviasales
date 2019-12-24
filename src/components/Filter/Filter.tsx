@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
 import classes from './Filter.module.sass';
 
+interface IFilter {
+  'all': boolean,
+  '0': boolean,
+  '1': boolean,
+  '2': boolean,
+  '3': boolean,
+  [key: string]: boolean,
+}
+
 const Filter = () => {
 
   const [ filter, setFilter ] = useState({
     'all': true,
-    0: true,
-    1: true,
-    2: true,
-    3: true,
+    '0': true,
+    '1': true,
+    '2': true,
+    '3': true,
   });
 
-  const filterChange = (event) => {
+  const filterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
 
-    setFilter(() => {
+    const getNewFilter = () => {
       const keys = Object.keys(filter);
-      const isAllChecked = (filter) => {
+      const isAllChecked = (filter: IFilter) => {
         for (const key in filter) {
-          if (key !== 'all' && !filter[key]) {
+          const bool: boolean = filter[key];
+
+          if (key !== 'all' && !bool) {
             return false;
           }
         }
@@ -27,12 +38,10 @@ const Filter = () => {
       };
 
       if (value === 'all') {
-        const newFilter = {};
+        const newFilter: any = {};
 
         keys.forEach((key) => newFilter[key] = checked);
-        return {
-          ...newFilter,
-        };
+        return newFilter;
       } else {
         const newFilter = { ...filter, [value]: checked };
 
@@ -41,7 +50,10 @@ const Filter = () => {
           'all': isAllChecked(newFilter),
         };
       }
-    });
+    };
+    const newFilter = getNewFilter();
+
+    setFilter(newFilter);
   };
 
   const { filterBlock, filterBlockTitle, filterBlockList, filterBlockListitem } = classes;
@@ -57,17 +69,17 @@ const Filter = () => {
         </label>
 
         <label className={filterBlockListitem}>
-          <input type='checkbox' checked={filter[0]} value={0} onChange={filterChange} />
+          <input type='checkbox' checked={filter['0']} value={'0'} onChange={filterChange} />
           Без пересадок
         </label>
 
         <label className={filterBlockListitem}>
-          <input type='checkbox' checked={filter[1]} value={1} onChange={filterChange} />
+          <input type='checkbox' checked={filter['1']} value={'1'} onChange={filterChange} />
           1 пересадка
         </label>
 
         <label className={filterBlockListitem}>
-          <input type='checkbox' checked={filter[2]} value={2} onChange={filterChange} />
+          <input type='checkbox' checked={filter['2']} value={'2'} onChange={filterChange} />
           2 пересадки
         </label>
 
