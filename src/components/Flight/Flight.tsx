@@ -6,8 +6,17 @@ interface IFlight {
   ticket: {
     price: number,
     carrier: string,
-    segments: []
+    segments: ISegment[],
+    id: number
   }
+}
+
+interface ISegment {
+  origin: string,
+    destination: string,
+    date: string,
+    duration: number,
+    stops: string[],
 }
 
 const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
@@ -21,7 +30,7 @@ const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
         <img src={`http://pics.avs.io/110/36/${carrier}.png`} alt={`Logo ${carrier}`} />
       </div>
 
-      {segments.map((segment, key) => {
+      {segments.map((segment: ISegment, key: number) => {
         return <FlightRow key={key} item={segment} />;
       })}
     </div>

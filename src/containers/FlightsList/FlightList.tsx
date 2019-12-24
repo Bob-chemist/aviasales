@@ -1,18 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEvent } from 'react';
 import classes from './FlightList.module.sass';
 import Flight from '../../components/Flight';
 import API from '../../API';
 import Loader from '../../components/Loader';
 import ErrorIndicator from '../../components/ErrorIndicator';
 
+interface ITicket {
+  price: number,
+  carrier: string,
+  segments: ISegment[],
+  id: number,
+}
+
+interface ISegment {
+  origin: string,
+  destination: string,
+  date: string,
+  duration: number,
+  stops: string[],
+}
+
 const FlightList = () => {
   const [ activeButton, setActiveButton ] = useState('price');
-  const [ tickets, setTickets ] = useState([]);
+  const [ tickets, setTickets ] = useState<ITicket[] | []>([]);
   const [ loading, setLoading ] = useState(true);
-  const [ error, setError ] = useState(null);
+  const [ error, setError ] = useState<Error | null>(null);
 
-  const prepareData = (arr) => {
-    return sortByPrice(sortByTime(arr.map((item, id) => ({ ...item, id }))));
+  const prepareData = (arr: ITicket[]) => {
+    return sortByPrice(sortByTime(arr.map((ticket: ITicket, id: number) => ({ ...ticket, id }))));
   };
 
   useEffect(() => {
@@ -38,22 +53,22 @@ const FlightList = () => {
     // eslint-disable-next-line
   }, []);
 
-  const sortByPrice = (arr) => {
-    return arr.sort((a, b) => a.price - b.price);
+  const sortByPrice = (arr: ITicket[]) => {
+    return arr.sort((a: ITicket, b: ITicket) => a.price - b.price);
   };
 
-  const sortByTime = (arr) => {
-    return arr.sort((a, b) => {
-      a.segments.sort((x, y) => x.duration - y.duration);
-      b.segments.sort((x, y) => x.duration - y.duration);
+  const sortByTime = (arr: ITicket[]) => {
+    return arr.sort((a: ITicket, b: ITicket) => {
+      a.segments.sort((x: ISegment, y: ISegment) => x.duration - y.duration);
+      b.segments.sort((x: ISegment, y: ISegment) => x.duration - y.duration);
       return a.segments[0].duration - b.segments[0].duration;
     });
   };
 
-  const buttonHandler = (event) => {
+  const buttonHandler = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const { value } = event.target;
+    const { value } = event.currentTarget;
 
     if (activeButton === value) return;
     setActiveButton(value);
@@ -69,7 +84,7 @@ const FlightList = () => {
     right = `${right} ${active}`;
   }
 
-  if (error) return <ErrorIndicator info={error.message} />;
+  if (error) return <ErrorIndicator info={error!.message} />;
 
   return (
     <div className={List}>
@@ -83,7 +98,7 @@ const FlightList = () => {
           самый быстрый
         </button>
       </div>
-      {loading ? <Loader /> : tickets.map((ticket) => {
+      {loading ? <Loader /> : (tickets as ITicket[]).map((ticket: ITicket) => {
         return <Flight ticket={ticket} key={ticket.id} />;
       })}
 
