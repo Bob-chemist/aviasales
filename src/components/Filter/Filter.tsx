@@ -73,7 +73,7 @@ const Filter = () => {
       <label key={key} className={filterBlockListitem}>
         <input type='checkbox' checked={bool} value={key} onChange={filterChange} />
         <div className={filterBlockInput} style={bool ? undefined : { borderColor: '#9ABBCE' } }>
-          <div className={filterBlockInputCheck} style={bool ? { display: 'block' } : undefined}></div>
+          <div className={filterBlockInputCheck} style={bool ? { opacity: 1 } : undefined}></div>
         </div>
         {landingsArray[key]}
       </label>

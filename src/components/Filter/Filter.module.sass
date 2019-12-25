@@ -42,10 +42,11 @@
     width: 20px
     margin: 0 10px 0 0
     display: flex
-    justify-content: center    
+    justify-content: center 
+    transition: border-color .15s 
 
     &Check
-      display: none
+      opacity: 0
       margin-top: 2px
       border: 2px solid #2196F3
       border-left: none
@@ -53,3 +54,4 @@
       transform: rotate(45deg)
       width: 5px
       height: 9px
+      transition: opacity .15s 

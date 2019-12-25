@@ -5,23 +5,24 @@ import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const { i18n } = useTranslation();
+  const { header, select } = classes;
 
   const changeLang = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = event.target;
-
-    i18n.changeLanguage(value);
+    i18n.changeLanguage(event.target.value);
   };
 
   return (
     <>
-      <header className={classes.header}>
+      <div className={select}>
+        <select defaultValue={'ru'} onChange={changeLang}>
+          <option value={'ru'}>Русский</option>
+          <option value={'en'}>English</option>
+          <option value={'tat'}>Татарча</option>
+        </select>
+      </div>
+      <header className={header}>
         <img src={logo} alt='logo' />
       </header>
-      <select defaultValue={'ru'} onChange={changeLang}>
-        <option value={'ru'}>Русский</option>
-        <option value={'en'}>English</option>
-        <option value={'tat'}>Татарча</option>
-      </select>
     </>
 
   );
