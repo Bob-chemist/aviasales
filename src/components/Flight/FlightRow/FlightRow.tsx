@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './FlightRow.module.sass';
+import { useTranslation } from 'react-i18next';
 
 interface Item {
   item: {
@@ -13,18 +14,19 @@ interface Item {
 
 const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Item) => {
   const { title, content } = classes;
+  const { t } = useTranslation();
 
   const landings = (num: number) => {
     switch (num) {
-      case 1: return '1 пересадка';
-      case 2:
-      case 3: return `${num} пересадки`;
-      default: return 'без пересадок';
+      case 1: return t('1connection');
+      case 2: return t('2connections');
+      case 3: return t('3connections');
+      default: return t('0connections');
     }
   };
 
   const flightTime = (min: number) => {
-    return `${Math.floor(min / 60)}ч ${min % 60}м`;
+    return `${Math.floor(min / 60)}${t('hours')} ${min % 60}${t('minutes')}`;
   };
 
   const departureArrival = (date: string, duration: number) => {
@@ -46,7 +48,7 @@ const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Ite
 
       <div>
         <div className={title}>
-          в пути
+          {t('duration')}
         </div >
         <div className={content}>
           {flightTime(duration)}

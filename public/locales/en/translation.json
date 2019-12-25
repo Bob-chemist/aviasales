@@ -1,0 +1,14 @@
+{
+    "cheap": "Cheapest",
+    "fast": "Fastest",
+    "nOfConnections": "Number of connections",
+    "all": "All",
+    "0connections": "Non-stop flight",
+    "1connection": "1 connection",
+    "2connections": "2 connections",
+    "3connections": "3 connections",
+    "duration": "Travel time",
+    "price": "RUB",
+    "hours": "h",
+    "minutes": "m"
+}

@@ -4,6 +4,7 @@ import Flight from '../../components/Flight';
 import API from '../../API';
 import Loader from '../../components/Loader';
 import ErrorIndicator from '../../components/ErrorIndicator';
+import { useTranslation } from 'react-i18next';
 
 interface ITicket {
   price: number,
@@ -21,10 +22,11 @@ interface ISegment {
 }
 
 const FlightList = () => {
-  const [ activeButton, setActiveButton ] = useState('price');
-  const [ tickets, setTickets ] = useState<ITicket[] | []>([]);
-  const [ loading, setLoading ] = useState(true);
-  const [ error, setError ] = useState<Error | null>(null);
+  const [activeButton, setActiveButton] = useState('price');
+  const [tickets, setTickets] = useState<ITicket[] | []>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  const { t } = useTranslation();
 
   const prepareData = (arr: ITicket[]) => {
     return sortByPrice(sortByTime(arr.map((ticket: ITicket, id: number) => ({ ...ticket, id }))));
@@ -91,11 +93,11 @@ const FlightList = () => {
       <div className={ChoiceButtons}>
         <button className={`${ChoiceButton} ${left}`} value='price'
           onClick={buttonHandler}>
-          самый дешевый
+          {t('cheap')}
         </button>
         <button className={`${ChoiceButton} ${right}`} value='duration'
           onClick={buttonHandler}>
-          самый быстрый
+          {t('fast')}
         </button>
       </div>
       {loading ? <Loader /> : (tickets as ITicket[]).map((ticket: ITicket) => {

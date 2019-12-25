@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classes from './Filter.module.sass';
+import { useTranslation } from 'react-i18next';
 
 interface IFilter {
   [key: string]: boolean,
@@ -22,6 +23,7 @@ const Filter = () => {
     '2': true,
     '3': true,
   });
+  const { t } = useTranslation();
 
   const filterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
@@ -62,18 +64,18 @@ const Filter = () => {
   const landings = ['all', '0', '1', '2', '3'];
 
   const landingsArray: ILanding = {
-    'all': 'Все',
-    '0': 'Без пересадок',
-    '1': '1 пересадка',
-    '2': '2 пересадки',
-    '3': '3 пересадки',
+    'all': t('all'),
+    '0': t('0connections'),
+    '1': t('1connection'),
+    '2': t('2connections'),
+    '3': t('3connections'),
   };
 
   const renderLabel = (key: string) => {
     const bool = filter[key];
 
     return (
-      <label className={filterBlockListitem}>
+      <label key={key} className={filterBlockListitem}>
         <input type='checkbox' checked={bool} value={key} onChange={filterChange} />
         <div className={filterBlockInput} style={bool ? undefined : { borderColor: '#9ABBCE' } }>
           <div className={filterBlockInputCheck} style={bool ? { display: 'block' } : undefined}></div>
@@ -94,7 +96,7 @@ const Filter = () => {
 
   return (
     <div className={filterBlock}>
-      <h3 className={filterBlockTitle}>Количество пересадок</h3>
+      <h3 className={filterBlockTitle}>{t('nOfConnections')}</h3>
       <div className={filterBlockList}>
         {landings.map(renderLabel)}
       </div>

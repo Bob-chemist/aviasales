@@ -1,0 +1,14 @@
+{
+    "cheap": "Самый дешевый",
+    "fast": "Самый быстрый",
+    "nOfConnections": "Количество пересадок",
+    "all": "Все",
+    "0connections": "Без пересадок",
+    "1connection": "1 пересадка",
+    "2connections": "2 пересадки",
+    "3connections": "3 пересадки",
+    "duration": "в пути",
+    "price": "Р",
+    "hours": "ч",
+    "minutes": "м"
+}
