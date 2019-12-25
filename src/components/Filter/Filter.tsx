@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import classes from './Filter.module.sass';
 import { useTranslation } from 'react-i18next';
+import { FilterContext } from '../../reducers/reducer';
 
 interface IFilter {
   [key: string]: boolean,
@@ -16,31 +17,25 @@ interface ILanding {
 }
 
 const Filter = () => {
-  const [filter, setFilter] = useState<IFilter>({
-    'all': true,
-    '0': true,
-    '1': true,
-    '2': true,
-    '3': true,
-  });
+  const initialFilter: IFilter = useContext(FilterContext);
+  const [filter, setFilter] = useState<IFilter>(initialFilter);
   const { t } = useTranslation();
 
   const filterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
 
+    const isAllChecked = (filter: IFilter) => {
+      for (const key in filter) {
+        if (key !== 'all' && !filter[key]) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
     const getNewFilter = () => {
       const keys = Object.keys(filter);
-      const isAllChecked = (filter: IFilter) => {
-        for (const key in filter) {
-          const bool: boolean = filter[key];
-
-          if (key !== 'all' && !bool) {
-            return false;
-          }
-        }
-
-        return true;
-      };
 
       if (value === 'all') {
         const newFilter: any = {};
