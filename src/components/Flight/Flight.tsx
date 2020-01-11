@@ -42,7 +42,7 @@ const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
       <div className={priceClass}>{price.toLocaleString('ru')} {t('price')}</div>
       <div></div>
       <div className={companyLogo}>
-        <img src={`http://pics.avs.io/110/36/${carrier}.png`} alt={`Logo ${carrier}`} />
+        <img src={`https://pics.avs.io/110/36/${carrier}.png`} alt={`Logo ${carrier}`} />
       </div>
 
       {newSegments.map((segment: ISegment, key: number) => {

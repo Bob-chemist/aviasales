@@ -7,6 +7,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'ru',
+    lng: 'ru',
     keySeparator: false,
     interpolation: {
       escapeValue: false,
