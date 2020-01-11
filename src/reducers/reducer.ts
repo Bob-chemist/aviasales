@@ -1,5 +1,3 @@
-import { createContext } from 'react';
-
 interface IAction {
   type: string,
   payload: object,
@@ -14,7 +12,7 @@ interface IFilter {
     '3': boolean,
 }
 
-export const initialState = {
+export const initialState: IFilter = {
   'all': true,
   '0': true,
   '1': true,
@@ -22,11 +20,9 @@ export const initialState = {
   '3': true,
 };
 
-export const FilterContext = createContext(initialState);
-
 export const testReducer = (state: IFilter, action: IAction) => {
   switch (action.type) {
-    case 'test_update':
+    case 'update':
       return {
         ...state,
         ...action.payload,

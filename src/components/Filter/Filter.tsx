@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import classes from './Filter.module.sass';
 import { useTranslation } from 'react-i18next';
-import { FilterContext } from '../../reducers/reducer';
+import { FilterContext } from '../../App';
 
 interface IFilter {
   [key: string]: boolean,
@@ -17,16 +17,15 @@ interface ILanding {
 }
 
 const Filter = () => {
-  const initialFilter: IFilter = useContext(FilterContext);
-  const [filter, setFilter] = useState<IFilter>(initialFilter);
   const { t } = useTranslation();
+  const { state, dispatch } = useContext<any>(FilterContext);
 
   const filterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
 
-    const isAllChecked = (filter: IFilter) => {
-      for (const key in filter) {
-        if (key !== 'all' && !filter[key]) {
+    const isAllChecked = (state: IFilter) => {
+      for (const key in state) {
+        if (key !== 'all' && !state[key]) {
           return false;
         }
       }
@@ -35,7 +34,7 @@ const Filter = () => {
     };
 
     const getNewFilter = () => {
-      const keys = Object.keys(filter);
+      const keys = Object.keys(state);
 
       if (value === 'all') {
         const newFilter: any = {};
@@ -43,7 +42,7 @@ const Filter = () => {
         keys.forEach((key) => newFilter[key] = checked);
         return newFilter;
       } else {
-        const newFilter = { ...filter, [value]: checked };
+        const newFilter = { ...state, [value]: checked };
 
         return {
           ...newFilter,
@@ -51,9 +50,11 @@ const Filter = () => {
         };
       }
     };
-    const newFilter = getNewFilter();
 
-    setFilter(newFilter);
+    dispatch({
+      type: 'update',
+      payload:  getNewFilter(),
+    });
   };
 
   const landings = ['all', '0', '1', '2', '3'];
@@ -67,7 +68,7 @@ const Filter = () => {
   };
 
   const renderLabel = (key: string) => {
-    const bool = filter[key];
+    const bool = state[key];
 
     return (
       <label key={key} className={filterBlockListitem}>
