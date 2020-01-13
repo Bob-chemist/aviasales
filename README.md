@@ -1,4 +1,4 @@
-# Тестовое задание Aviasales
+# Тестовое задание Aviasales ([ТЗ](https://github.com/KosyanMedia/test-tasks/tree/master/aviasales_frontend 'Тестовое задание Aviasales'))
 
 ## [Aviasales](https://aviasales-ts.firebaseapp.com/ 'Aviasales')
 
