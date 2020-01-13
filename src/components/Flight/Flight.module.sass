@@ -12,6 +12,7 @@
     font-weight: 600
     font-size: 24px
     line-height: 24px
+    text-transform: uppercase
     display: flex
     align-items: center
     color: #2196F3
@@ -20,4 +21,9 @@
   .companyLogo
     margin-bottom: 10px
   
-    
+@media (max-width: 500px)
+  .Card
+    .priceClass
+      grid-column: 1 / span 2;
+    .middle
+      display: none

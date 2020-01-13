@@ -23,7 +23,7 @@ interface ISegment {
 }
 
 const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
-  const { Card, priceClass, companyLogo } = classes;
+  const { Card, priceClass, companyLogo, middle } = classes;
   const { t } = useTranslation();
   const { state } = useContext<any>(FilterContext);
 
@@ -40,7 +40,7 @@ const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
   return (
     <div className={Card}>
       <div className={priceClass}>{price.toLocaleString('ru')} {t('price')}</div>
-      <div></div>
+      <div className={middle}></div>
       <div className={companyLogo}>
         <img src={`https://pics.avs.io/110/36/${carrier}.png`} alt={`Logo ${carrier}`} />
       </div>
