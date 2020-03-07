@@ -43,7 +43,9 @@ const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Ite
         <div className={title}>
           {`${origin} ${destination}`}
         </div>
-        <div className={content}>{departureArrival(date, duration)}</div>
+        <div className={content}>
+          {departureArrival(date, duration)}
+        </div>
       </div>
 
       <div>
@@ -53,7 +55,6 @@ const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Ite
         <div className={content}>
           {flightTime(duration)}
         </div>
-
       </div>
 
       <div>
@@ -63,7 +64,6 @@ const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Ite
         <div className={content}>
           {stops.join(', ')}
         </div>
-
       </div>
     </>
   );

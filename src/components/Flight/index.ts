@@ -1,3 +1,1 @@
-import Flight from './Flight';
-
-export default Flight;
+export { default } from './Flight';

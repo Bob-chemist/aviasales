@@ -1,3 +1,1 @@
-import FlightRow from './FlightRow';
-
-export default FlightRow;
+export { default } from './FlightRow';

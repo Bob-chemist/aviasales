@@ -1,3 +1,1 @@
-import FlightList from './FlightList';
-
-export default FlightList;
+export { default } from './FlightList';
