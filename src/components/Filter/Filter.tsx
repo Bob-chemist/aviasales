@@ -2,28 +2,20 @@ import React, { useContext } from 'react';
 import classes from './Filter.module.sass';
 import { useTranslation } from 'react-i18next';
 import { FilterContext } from '../../App';
+import { FilterState, UPDATE } from '../../reducers';
 
-interface IFilter {
-  [key: string]: boolean,
-  'all': boolean,
-  '0': boolean,
-  '1': boolean,
-  '2': boolean,
-  '3': boolean,
+interface Landing {
+  [key: string]: string;
 }
 
-interface ILanding {
-  [key: string]: string
-}
-
-const Filter = () => {
+const Filter = (): JSX.Element => {
   const { t } = useTranslation();
-  const { state, dispatch } = useContext<any>(FilterContext);
+  const { state, dispatch } = useContext(FilterContext);
 
-  const filterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const filterChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, checked } = event.target;
 
-    const isAllChecked = (state: IFilter) => {
+    const isAllChecked = (state: FilterState): boolean => {
       for (const key in state) {
         if (key !== 'all' && !state[key]) {
           return false;
@@ -33,11 +25,11 @@ const Filter = () => {
       return true;
     };
 
-    const getNewFilter = () => {
+    const getNewFilter = (): FilterState => {
       const keys = Object.keys(state);
 
       if (value === 'all') {
-        const newFilter: any = {};
+        const newFilter = {} as FilterState;
 
         keys.forEach((key) => newFilter[key] = checked);
         return newFilter;
@@ -52,14 +44,14 @@ const Filter = () => {
     };
 
     dispatch({
-      type: 'update',
+      type: UPDATE,
       payload:  getNewFilter(),
     });
   };
 
   const landings = ['all', '0', '1', '2', '3'];
 
-  const landingsArray: ILanding = {
+  const landingsArray: Landing = {
     'all': t('all'),
     '0': t('0connections'),
     '1': t('1connection'),
@@ -67,7 +59,7 @@ const Filter = () => {
     '3': t('3connections'),
   };
 
-  const renderLabel = (key: string) => {
+  const renderLabel = (key: string): JSX.Element => {
     const bool = state[key];
 
     return (

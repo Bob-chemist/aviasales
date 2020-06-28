@@ -1,15 +1,19 @@
-import React, { Suspense, useReducer, createContext } from 'react';
+import React, { Suspense, useReducer, createContext, Dispatch } from 'react';
 import classes from './App.module.sass';
 import Header from './components/Header';
 import Filter from './components/Filter';
 import ErrorBoundary from './containers/ErrorBoundary';
-import FlightList from './containers/FlightsList';
 import Loader from './components/Loader';
-import { initialState, testReducer } from './reducers/reducer';
+import { initialState, testReducer, FilterState, Action } from './reducers';
+import FlightList from './containers/FlightsList';
 
-export const FilterContext = createContext({});
+interface Context {
+  dispatch: Dispatch<Action>;
+  state: FilterState;
+}
+export const FilterContext = createContext<Context>({} as Context);
 
-function App() {
+const App = (): JSX.Element => {
   const [state, dispatch] = useReducer(testReducer, initialState);
 
   return (
@@ -27,6 +31,6 @@ function App() {
       </Suspense>
     </ErrorBoundary>
   );
-}
+};
 
 export default App;

@@ -1,7 +1,9 @@
 {
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2019,
-    "sourceType": "module"
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "tsconfig.json"
   },
   "env": {
     "browser": true,
@@ -9,7 +11,14 @@
     "es6": true
   },
   "extends": [
+    // Базовый набор правил eslint
     "eslint:recommended",
+    // Отключаем правила из базового набора
+    "plugin:@typescript-eslint/eslint-recommended",
+    // Базовые правила для TypeScript
+    "plugin:@typescript-eslint/recommended",
+    // Правила TS, требующие инфо о типах
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "react-app"
   ],
   "plugins": [

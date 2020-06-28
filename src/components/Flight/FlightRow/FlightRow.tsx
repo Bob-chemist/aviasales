@@ -1,22 +1,17 @@
 import React from 'react';
 import classes from './FlightRow.module.sass';
 import { useTranslation } from 'react-i18next';
+import { Segment } from '../../../containers/FlightsList';
 
-interface Item {
-  item: {
-    origin: string,
-    destination: string,
-    date: string,
-    duration: number,
-    stops: string[],
-  }
+interface Row {
+  segment: Segment;
 }
 
-const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Item) => {
+const FlightRow = ({ segment: { origin, destination, date, duration, stops } }: Row): JSX.Element => {
   const { title, content } = classes;
   const { t } = useTranslation();
 
-  const landings = (num: number) => {
+  const landings = (num: number): string => {
     switch (num) {
       case 1: return t('1connection');
       case 2: return t('2connections');
@@ -25,11 +20,11 @@ const FlightRow = ({ item: { origin, destination, date, duration, stops } }: Ite
     }
   };
 
-  const flightTime = (min: number) => {
+  const flightTime = (min: number): string => {
     return `${Math.floor(min / 60)}${t('hours')} ${min % 60}${t('minutes')}`;
   };
 
-  const departureArrival = (date: string, duration: number) => {
+  const departureArrival = (date: string, duration: number): string => {
     const departure = new Date(date).toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' });
     const arrival = new Date(new Date(date).getTime() + duration * 60 * 1000)
       .toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' });

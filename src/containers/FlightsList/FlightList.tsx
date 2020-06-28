@@ -6,30 +6,30 @@ import Loader from '../../components/Loader';
 import ErrorIndicator from '../../components/ErrorIndicator';
 import { useTranslation } from 'react-i18next';
 
-interface ITicket {
-  price: number,
-  carrier: string,
-  segments: ISegment[],
-  id: number,
+export interface Ticket {
+  price: number;
+  carrier: string;
+  segments: Segment[];
+  id: number;
 }
 
-interface ISegment {
-  origin: string,
-  destination: string,
-  date: string,
-  duration: number,
-  stops: string[],
+export interface Segment {
+  origin: string;
+  destination: string;
+  date: string;
+  duration: number;
+  stops: string[];
 }
 
-const FlightList = () => {
+const FlightList = (): JSX.Element => {
   const [activeButton, setActiveButton] = useState('price');
-  const [tickets, setTickets] = useState<ITicket[] | []>([]);
+  const [tickets, setTickets] = useState<Ticket[] | []>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const { t } = useTranslation();
 
-  const prepareData = (arr: ITicket[]) => {
-    return sortByPrice(sortByTime(arr.map((ticket: ITicket, id: number) => ({ ...ticket, id }))));
+  const prepareData = (arr: Ticket[]): Ticket[] => {
+    return sortByPrice(sortByTime(arr.map((ticket: Ticket, id: number) => ({ ...ticket, id }))));
   };
 
   useEffect(() => {
@@ -55,19 +55,19 @@ const FlightList = () => {
     // eslint-disable-next-line
   }, []);
 
-  const sortByPrice = (arr: ITicket[]) => {
-    return arr.sort((a: ITicket, b: ITicket) => a.price - b.price);
+  const sortByPrice = (arr: Ticket[]): Ticket[] => {
+    return arr.sort((a: Ticket, b: Ticket) => a.price - b.price);
   };
 
-  const sortByTime = (arr: ITicket[]) => {
-    return arr.sort((a: ITicket, b: ITicket) => {
-      a.segments.sort((x: ISegment, y: ISegment) => x.duration - y.duration);
-      b.segments.sort((x: ISegment, y: ISegment) => x.duration - y.duration);
+  const sortByTime = (arr: Ticket[]): Ticket[] => {
+    return arr.sort((a: Ticket, b: Ticket) => {
+      a.segments.sort((x: Segment, y: Segment) => x.duration - y.duration);
+      b.segments.sort((x: Segment, y: Segment) => x.duration - y.duration);
       return a.segments[0].duration - b.segments[0].duration;
     });
   };
 
-  const buttonHandler = (event: MouseEvent<HTMLButtonElement>) => {
+  const buttonHandler = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
     const { value } = event.currentTarget;
@@ -86,7 +86,7 @@ const FlightList = () => {
     right = `${right} ${active}`;
   }
 
-  if (error) return <ErrorIndicator info={error!.message} />;
+  if (error) return <ErrorIndicator info={error.message} />;
 
   return (
     <div className={List}>
@@ -100,7 +100,7 @@ const FlightList = () => {
           {t('fast')}
         </button>
       </div>
-      {loading ? <Loader /> : (tickets as ITicket[]).map((ticket: ITicket) => {
+      {loading ? <Loader /> : (tickets as Ticket[]).map((ticket: Ticket) => {
         return <Flight ticket={ticket} key={ticket.id} />;
       })}
 

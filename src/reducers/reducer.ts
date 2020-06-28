@@ -1,18 +1,20 @@
-interface IAction {
-  type: string,
-  payload: object,
+export const UPDATE = 'UPDATE';
+
+export interface Action {
+  type: typeof UPDATE;
+  payload: FilterState;
 }
 
-interface IFilter {
-    [key: string]: boolean,
-    'all': boolean,
-    '0': boolean,
-    '1': boolean,
-    '2': boolean,
-    '3': boolean,
+export interface FilterState {
+    [key: string]: boolean;
+    'all': boolean;
+    '0': boolean;
+    '1': boolean;
+    '2': boolean;
+    '3': boolean;
 }
 
-export const initialState: IFilter = {
+export const initialState: FilterState = {
   'all': true,
   '0': true,
   '1': true,
@@ -20,9 +22,9 @@ export const initialState: IFilter = {
   '3': true,
 };
 
-export const testReducer = (state: IFilter, action: IAction) => {
+export const testReducer = (state: FilterState, action: Action): FilterState => {
   switch (action.type) {
-    case 'update':
+    case UPDATE:
       return {
         ...state,
         ...action.payload,

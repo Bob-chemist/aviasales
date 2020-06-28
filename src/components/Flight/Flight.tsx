@@ -3,31 +3,18 @@ import classes from './Flight.module.sass';
 import FlightRow from './FlightRow/FlightRow';
 import { useTranslation } from 'react-i18next';
 import { FilterContext } from '../../App';
+import { Ticket, Segment } from '../../containers/FlightsList';
 
-interface IFlight {
-  ticket: ITicket
-}
-interface ITicket {
-  price: number,
-  carrier: string,
-  segments: ISegment[],
-  id: number,
+interface FlightProps {
+  ticket: Ticket;
 }
 
-interface ISegment {
-  origin: string,
-    destination: string,
-    date: string,
-    duration: number,
-    stops: string[],
-}
-
-const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
+const Flight = ({ ticket: { price, carrier, segments } }: FlightProps): JSX.Element => {
   const { Card, priceClass, companyLogo, middle } = classes;
   const { t } = useTranslation();
-  const { state } = useContext<any>(FilterContext);
+  const { state } = useContext(FilterContext);
 
-  const filterByUser = (segments: ISegment[]) => {
+  const filterByUser = (segments: Segment[]): Segment[] => {
     return segments.filter(({ stops }) => {
       return state[stops.length.toString()] || state['all'];
     });
@@ -45,8 +32,8 @@ const Flight = ({ ticket: { price, carrier, segments } }: IFlight) => {
         <img src={`https://pics.avs.io/110/36/${carrier}.png`} alt={`Logo ${carrier}`} />
       </div>
 
-      {newSegments.map((segment: ISegment, key: number) => {
-        return <FlightRow key={key} item={segment} />;
+      {newSegments.map((segment: Segment, key: number) => {
+        return <FlightRow key={key} segment={segment} />;
       })}
     </div>
   );
