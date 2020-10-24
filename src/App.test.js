@@ -1,10 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import Header from './components/Header';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
+it('render header', () => {
+  const { getByText } = render(<Header />);
+  const linkElement = getByText(/english/i);
 
   expect(linkElement).toBeInTheDocument();
 });
+
