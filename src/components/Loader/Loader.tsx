@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './Loader.sass';
 
-const Loader = () => {
+const Loader: FC = () => {
   return (
     <div className="Loader-container">
       <div className="Loader" />

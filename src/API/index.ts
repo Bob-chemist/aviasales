@@ -1,3 +1,1 @@
-import axios from './API';
-
-export default axios;
+export { default } from './API';

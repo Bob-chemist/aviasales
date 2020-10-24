@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import classes from './Filter.module.sass';
 import { useTranslation } from 'react-i18next';
 import { FilterContext } from '../../App';
@@ -8,7 +8,7 @@ interface Landing {
   [key: string]: string;
 }
 
-const Filter = (): JSX.Element => {
+const Filter: FC = () => {
   const { t } = useTranslation();
   const { state, dispatch } = useContext(FilterContext);
 

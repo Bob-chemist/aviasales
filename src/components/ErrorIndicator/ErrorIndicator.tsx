@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './ErrorIndicator.module.sass';
 
-const ErrorIndicator = ({ info }: {info: string | null}) => {
-  return (
+type OwnProps ={
+  info: string | null;
+}
+
+const ErrorIndicator: FC<OwnProps> = ({ info }) => {
+  return info ? (
     <div className={classes.error}>
       {`Something gone wrong! ${info}`}
     </div>
-  );
+  ) : null;
 };
 
 export default ErrorIndicator;

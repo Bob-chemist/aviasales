@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './FlightRow.module.sass';
 import { useTranslation } from 'react-i18next';
 import { Segment } from '../../../containers/FlightsList';
@@ -7,7 +7,7 @@ interface Row {
   segment: Segment;
 }
 
-const FlightRow = ({ segment: { origin, destination, date, duration, stops } }: Row): JSX.Element => {
+const FlightRow: FC<Row> = ({ segment: { origin, destination, date, duration, stops } }) => {
   const { title, content } = classes;
   const { t } = useTranslation();
 

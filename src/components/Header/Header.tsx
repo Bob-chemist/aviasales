@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import classes from './Header.module.sass';
 import logo from './Logo.svg';
 import { useTranslation } from 'react-i18next';
 
-const Header = () => {
+const Header: FC = () => {
   const { i18n } = useTranslation();
   const { header, select } = classes;
 
-  const changeLang = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    i18n.changeLanguage(event.target.value);
+  const changeLang = (event: ChangeEvent<HTMLSelectElement>) => {
+    void i18n.changeLanguage(event.target.value);
   };
 
   return (
@@ -24,7 +24,6 @@ const Header = () => {
         <img src={logo} alt='logo' />
       </header>
     </>
-
   );
 };
 

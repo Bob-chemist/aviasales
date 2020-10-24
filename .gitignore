@@ -7,8 +7,6 @@
 
 # firebase deployment
 /.firebase
-.firebaserc
-firebase.json
 
 # testing
 /coverage

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, MouseEvent } from 'react';
+import React, { useState, useEffect, MouseEvent, FC } from 'react';
 import classes from './FlightList.module.sass';
 import Flight from '../../components/Flight';
 import API from '../../API';
 import Loader from '../../components/Loader';
 import ErrorIndicator from '../../components/ErrorIndicator';
 import { useTranslation } from 'react-i18next';
+import { AxiosError, AxiosResponse } from 'axios';
 
 export interface Ticket {
   price: number;
@@ -21,7 +22,7 @@ export interface Segment {
   stops: string[];
 }
 
-const FlightList = (): JSX.Element => {
+const FlightList: FC = () => {
   const [activeButton, setActiveButton] = useState('price');
   const [tickets, setTickets] = useState<Ticket[] | []>([]);
   const [loading, setLoading] = useState(true);
@@ -34,9 +35,9 @@ const FlightList = (): JSX.Element => {
 
   useEffect(() => {
     API.get('search')
-      .then(({ data }) => data.searchId)
+      .then(({ data }: AxiosResponse<{searchId: string}>) => data.searchId)
       .then((id) => API.get(`tickets?searchId=${id}`))
-      .then(({ data: { tickets } }) => {
+      .then(({ data: { tickets } }: {data: {tickets: Ticket[]}}) => {
 
         if (tickets && tickets.length) {
           if (tickets.length > 5) {
@@ -47,7 +48,7 @@ const FlightList = (): JSX.Element => {
           setLoading(false);
         }
       })
-      .catch((error) => {
+      .catch((error: AxiosError) => {
         setError(error);
         setLoading(false);
         console.log(error.message);

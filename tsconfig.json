@@ -18,13 +18,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "declaration": true
+    "declaration": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "typings/declarations.d.ts",
     "src",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "./src/serviceWorker.js"
   ]
 }

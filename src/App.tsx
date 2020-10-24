@@ -1,4 +1,4 @@
-import React, { Suspense, useReducer, createContext, Dispatch } from 'react';
+import React, { Suspense, useReducer, createContext, Dispatch, FC } from 'react';
 import classes from './App.module.sass';
 import Header from './components/Header';
 import Filter from './components/Filter';
@@ -13,7 +13,7 @@ interface Context {
 }
 export const FilterContext = createContext<Context>({} as Context);
 
-const App = (): JSX.Element => {
+const App: FC = () => {
   const [state, dispatch] = useReducer(testReducer, initialState);
 
   return (
